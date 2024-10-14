@@ -1,5 +1,7 @@
 from midiutil import MIDIFile
 import random
+import pygame
+from time import sleep
 
 
 def user_input():
@@ -29,12 +31,26 @@ def compose_music(mood, tempo, key):
         midi.writeFile(output_file)
     print(f"Random music composed and saved as 'output_{mood}.mid'!")
 
+
+
+def play_midi(filename):
+    pygame.mixer.init()
+    pygame.mixer.music.load(filename)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        sleep(1)  # Let the music play
+
+
    
 
 def main():
   tempo,mood,key = user_input()
 
   compose_music(mood, tempo, key)
+  play_midi(f"output_{mood}.mid")
+
+  
+
 
 
 if __name__ == "__main__":
